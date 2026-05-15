@@ -23,7 +23,11 @@ Python 3.8 이상이 필요합니다.
 pip install -r requirements.txt
 ```
 
-### 2. 데이터셋 준비 (Dataset Preparation)
+### 2. 가중치 다운로드 (Weights)
+학습된 모델 가중치(`best.pt`)는 아래 링크에서 다운로드하여 `models/` 폴더에 넣어주세요.
+- [Google Drive Download](https://drive.google.com/drive/folders/1cx7MDy3rcsAoXcUtLK3sOgET2W8gFJ-i?usp=sharing)
+
+### 3. 데이터셋 준비 (Dataset Preparation)
 기본 데이터셋은 `data/` 폴더에 위치합니다. 
 - DENTEX 데이터셋 변환: `src/data_converter.py`
 - 소아 데이터셋 추가: `src/convert_pediatric.py` (자동으로 통합됨)
