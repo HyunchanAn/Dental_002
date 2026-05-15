@@ -33,3 +33,19 @@ models/
 
 # Data
 data/
+
+# Analysis and Reports
+*.json
+*.csv
+evaluation_report_*/
+deep_verification_report.json
+class_distribution_report.csv
+
+# Debug and Temporary files
+debug_*/
+debug_*.png
+error_analysis/
+sahi_results/
+temp_xai.png
+test_images/
+test_results/

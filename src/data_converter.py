@@ -4,6 +4,27 @@ import shutil
 from pathlib import Path
 from tqdm import tqdm
 
+def coco_to_yolo_bbox(bbox, img_w, img_h):
+    """
+    Converts COCO format [x_min, y_min, w, h] to YOLO format [center_x, center_y, norm_w, norm_h]
+    with clipping to [0, 1].
+    """
+    x_min, y_min, w, h = bbox
+    
+    # Calculate centers and normalized dimensions
+    center_x = (x_min + w / 2) / img_w
+    center_y = (y_min + h / 2) / img_h
+    norm_w = w / img_w
+    norm_h = h / img_h
+    
+    # Clipping to [0, 1] to handle edge cases
+    center_x = max(0.0, min(1.0, center_x))
+    center_y = max(0.0, min(1.0, center_y))
+    norm_w = max(0.0, min(1.0, norm_w))
+    norm_h = max(0.0, min(1.0, norm_h))
+    
+    return center_x, center_y, norm_w, norm_h
+
 def convert_dentex_to_yolo(json_path, image_dir, output_dir):
     """
     Converts DENTEX COCO-style JSON annotations to YOLO format.
@@ -69,17 +90,7 @@ def convert_dentex_to_yolo(json_path, image_dir, output_dir):
             yolo_cls = cat_id_to_yolo_id[cat_id]
             bbox = ann['bbox'] # [x_min, y_min, width, height]
             
-            x_min, y_min, w, h = bbox
-            center_x = (x_min + w / 2) / img_w
-            center_y = (y_min + h / 2) / img_h
-            norm_w = w / img_w
-            norm_h = h / img_h
-            
-            # Clipping to [0, 1]
-            center_x = max(0.0, min(1.0, center_x))
-            center_y = max(0.0, min(1.0, center_y))
-            norm_w = max(0.0, min(1.0, norm_w))
-            norm_h = max(0.0, min(1.0, norm_h))
+            center_x, center_y, norm_w, norm_h = coco_to_yolo_bbox(bbox, img_w, img_h)
             
             yolo_lines.append(f"{yolo_cls} {center_x:.6f} {center_y:.6f} {norm_w:.6f} {norm_h:.6f}")
         
