@@ -7,8 +7,8 @@ import os
 import torch
 from sahi.models.ultralytics import UltralyticsDetectionModel
 from sahi.predict import get_sliced_prediction
-from src.preprocess import apply_clahe
-from src.explain import get_xai_heatmap
+from dentex_caries import CariesDetector, apply_clahe
+# from src.explain import get_xai_heatmap  # This will be handled by CariesDetector.explain
 
 st.set_page_config(page_title="Caries Detection AI", layout="wide")
 
@@ -21,9 +21,9 @@ st.markdown("""
 st.sidebar.header("Model Settings")
 model_source = st.sidebar.radio("모델 선택", ["기본 모델 (yolo11s.pt)", "사용자 학습 모델"])
 
-model_path = "models/best.pt" # Default to newly trained model
+model_path = "models/best_refined.pt" # Default to refined model
 if model_source == "사용자 학습 모델":
-    custom_model_path = st.sidebar.text_input("모델 경로 (.pt 파일)", "models/best.pt")
+    custom_model_path = st.sidebar.text_input("모델 경로 (.pt 파일)", "models/best_refined.pt")
     if os.path.exists(custom_model_path):
         model_path = custom_model_path
     else:
@@ -74,32 +74,17 @@ if uploaded_file is not None:
             with st.spinner("AI가 분석 중입니다..."):
                 img_array = np.array(image)
                 img_bgr = cv2.cvtColor(img_array, cv2.COLOR_RGB2BGR)
-                if use_clahe:
-                    img_bgr = apply_clahe(img_bgr, clip_limit=clahe_clip)
-                processed_img_rgb = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2RGB)
                 
-                final_boxes = []
-                if use_sahi:
-                    sahi_model = UltralyticsDetectionModel(
-                        model_path=model_path,
-                        confidence_threshold=conf_threshold,
-                        device="cuda:0" if torch.cuda.is_available() else "cpu"
-                    )
-                    sahi_results = get_sliced_prediction(
-                        img_bgr,
-                        sahi_model,
-                        slice_height=slice_size,
-                        slice_width=slice_size,
-                        overlap_height_ratio=overlap_ratio,
-                        overlap_width_ratio=overlap_ratio,
-                        verbose=0
-                    )
-                    for pred in sahi_results.object_prediction_list:
-                        final_boxes.append({"bbox": pred.bbox.to_xyxy(), "conf": pred.score.value, "cls": pred.category.id, "name": pred.category.name})
-                else:
-                    yolo_results = model.predict(processed_img_rgb, conf=conf_threshold)
-                    for box in yolo_results[0].boxes:
-                        final_boxes.append({"bbox": box.xyxy[0].tolist(), "conf": float(box.conf[0]), "cls": int(box.cls[0]), "name": model.names[int(box.cls[0])]})
+                detector = CariesDetector(model_path=model_path, conf=conf_threshold)
+                final_boxes, processed_img_bgr = detector.predict(
+                    img_bgr, 
+                    use_clahe=use_clahe, 
+                    clahe_clip=clahe_clip,
+                    use_sahi=use_sahi, 
+                    slice_size=slice_size, 
+                    overlap_ratio=overlap_ratio
+                )
+                processed_img_rgb = cv2.cvtColor(processed_img_bgr, cv2.COLOR_BGR2RGB)
 
                 # --- Visualization ---
                 res_image = Image.fromarray(processed_img_rgb)
@@ -170,9 +155,9 @@ if uploaded_file is not None:
                 with st.spinner("히트맵을 생성 중입니다..."):
                     # Temporarily save image for explainability module
                     temp_img_path = "temp_xai.png"
-                    res_image.save(temp_img_path)
+                    image.save(temp_img_path) # Use original image
                     
-                    viz, _ = get_xai_heatmap(model_path, temp_img_path)
+                    viz, _ = detector.explain(temp_img_path)
                     if viz is not None:
                         st.image(viz, caption="Eigen-CAM Heatmap (붉은색일수록 모델이 집중한 영역입니다)", use_container_width=True)
                         st.info("💡 히트맵의 붉은 영역은 모델이 진단을 내릴 때 가장 중요하게 참고한 시각적 특징점들입니다.")

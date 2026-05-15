@@ -17,38 +17,63 @@
 
 ## 설치 및 실행 (Installation & Usage)
 
-### 1. 환경 설정 (Environment Setup)
-Python 3.8 이상이 필요합니다.
+### 1. 환경 설정 및 설치 (Installation)
+Python 3.9 이상이 필요합니다. 이 프로젝트는 **독립적인 Python 패키지(`dentex_caries`)** 로 설계되었습니다.
+
 ```bash
-pip install -r requirements.txt
+# 개발자 모드로 패키지 및 의존성 설치
+pip install -e .
 ```
+*(기존 `pip install -r requirements.txt` 방식도 지원합니다.)*
 
-### 2. 가중치 다운로드 (Weights)
-학습된 모델 가중치(`best.pt`)는 아래 링크에서 다운로드하여 `models/` 폴더에 넣어주세요.
-- [Google Drive Download](https://drive.google.com/drive/folders/1cx7MDy3rcsAoXcUtLK3sOgET2W8gFJ-i?usp=sharing)
+### 2. 가중치 준비 (Weights)
+최종 정제된 성능 고도화 모델인 `best_refined.pt`가 `models/` 폴더에 위치해야 합니다. (기본 모델로 자동 세팅됨)
 
-### 3. 데이터셋 준비 (Dataset Preparation)
-기본 데이터셋은 `data/` 폴더에 위치합니다. 
-- DENTEX 데이터셋 변환: `src/data_converter.py`
-- 소아 데이터셋 추가: `src/convert_pediatric.py` (자동으로 통합됨)
-
-### 3. 모델 학습 (Training)
-```bash
-python train.py
-```
-학습된 모델은 `runs/detect/`와 `models/` 폴더에 저장됩니다.
-
-### 4. 웹 애플리케이션 실행 (Run Web App)
+### 3. 애플리케이션 실행 (Run Web App)
 로컬에서 앱을 실행하여 테스트할 수 있습니다.
 ```bash
-python -m streamlit run app.py
+streamlit run app.py
+```
+
+### 4. 라이브러리 사용법 (Library Usage)
+다른 파이썬 프로젝트에서 모듈로 임포트하여 사용할 수 있습니다.
+```python
+import cv2
+from dentex_caries import CariesDetector
+
+# 모델 로드 및 추론
+detector = CariesDetector("models/best_refined.pt")
+image = cv2.imread("panorama.jpg")
+preds, processed_img = detector.predict(image)
+
+# XAI 판단 근거 확인
+heatmap, _ = detector.explain("panorama.jpg")
 ```
 
 ## 배포 (Deployment)
-이 프로젝트는 **Streamlit Cloud**에 최적화되어 있습니다.
-1. GitHub 저장소에 Push.
-2. Streamlit Cloud에서 해당 저장소 연결.
-3. `app.py`를 메인 파일로 설정하여 배포.
+
+### Docker 빌드 및 실행 (Recommended)
+환경 문제 없이 어디서나 구동 가능한 도커를 지원합니다.
+```bash
+# 도커 이미지 빌드
+docker build -t dentex-caries .
+
+# 컨테이너 백그라운드 실행
+docker run -d -p 8501:8501 dentex-caries
+```
+
+### Streamlit Cloud 배포
+1. GitHub 저장소에 Push
+2. Streamlit Cloud에서 해당 저장소 연결
+3. `app.py`를 메인 파일로 설정하여 배포
+
+## 테스트 (Testing)
+프로젝트 핵심 로직(`dentex_caries` 라이브러리)에 대한 단위 테스트가 구현되어 있습니다.
+```bash
+# 전체 테스트 및 커버리지 확인
+pytest tests/ --cov=src/dentex_caries --cov-report=term
+```
+*(현재 상태: `8 passed` 정상 통과 완료)*
 
 ## 기술 스택 (Tech Stack)
 - **Model**: YOLOv11 (Ultralytics)

@@ -6,5 +6,7 @@ pandas
 numpy
 huggingface_hub
 kagglehub
+sahi
+grad-cam
 pytest
 pytest-cov
