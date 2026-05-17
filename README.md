@@ -5,6 +5,7 @@
 [![Python](https://img.shields.io/badge/Python-3.12+-007ec6)](https://github.com/HyunchanAn/Caries_Detection_from_Panoramic)
 [![Backend](https://img.shields.io/badge/Backend-YOLOv11-d00)](https://github.com/HyunchanAn/Caries_Detection_from_Panoramic)
 [![UI](https://img.shields.io/badge/UI-Streamlit-f39c12)](https://github.com/HyunchanAn/Caries_Detection_from_Panoramic)
+[![CI/CD](https://github.com/HyunchanAn/Caries_Detection_from_Panoramic/actions/workflows/ci.yml/badge.svg)](https://github.com/HyunchanAn/Caries_Detection_from_Panoramic/actions/workflows/ci.yml)
 
 
 ## 프로젝트 개요 (Project Overview)
