@@ -340,3 +340,5 @@
   - 로컬 환경 검증 및 yaml 파일 구문 오류 없음 확인.
 - [README] README.md 상단에 CI/CD 빌드 상태 배지(GitHub Actions build badge) 추가.
 
+
+2026-05-26: Streamlit Cloud 배포 중 발생하는 libglib2.0-0 의존성 충돌 해결을 위해 packages.txt 에서 해당 라이브러리를 포함한 OpenCV GUI 의존성 제거. 아울러 requirements.txt 최상단에 PyTorch CPU 버전 링크를 추가하여 ultralytics 설치 중 발생할 수 있는 OOM 에러 사전 차단.
