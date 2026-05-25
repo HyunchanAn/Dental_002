@@ -84,6 +84,9 @@ docker run -d -p 8501:8501 dentex-caries
 2. Streamlit Cloud에서 해당 저장소 연결
 3. `app.py`를 메인 파일로 설정하여 배포
 
+> **[Troubleshooting] OpenCV ImportError가 발생할 경우:**
+> Streamlit Cloud 대시보드의 **App settings -> General -> Python version** 설정이 `3.14` 등 최신 버전으로 되어 있을 경우 `cv2` 모듈 임포트 에러가 발생할 수 있습니다. 해당 드롭다운을 **`3.11`** 로 수동 변경한 뒤 **Save changes**를 눌러주세요.
+
 ## 테스트 (Testing)
 프로젝트 핵심 로직(`dentex_caries` 라이브러리)에 대한 단위 테스트가 구현되어 있습니다.
 ```bash
