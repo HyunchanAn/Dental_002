@@ -342,3 +342,5 @@
 
 
 2026-05-26: Streamlit Cloud 배포 중 발생하는 libglib2.0-0 의존성 충돌 해결을 위해 packages.txt 에서 해당 라이브러리를 포함한 OpenCV GUI 의존성 제거. 아울러 requirements.txt 최상단에 PyTorch CPU 버전 링크를 추가하여 ultralytics 설치 중 발생할 수 있는 OOM 에러 사전 차단.
+
+2026-05-26: Streamlit Cloud에서 불안정한 최신 버전(Python 3.14)을 사용하여 ultralytics 내부의 cv2(OpenCV) 임포트 에러가 발생하는 것을 확인. 이를 해결하기 위해 프로젝트 루트에 .python-version 파일을 생성하고 '3.11'을 명시하여 로컬과 동일한 안정 버전으로 강제 구동하도록 조치함.
