@@ -29,7 +29,8 @@ venv/
 runs/
 .streamlit/
 *.pt
-models/
+models/*
+!models/best_refined.pt
 
 # Data
 data/
