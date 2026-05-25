@@ -21,7 +21,8 @@ st.markdown("""
 st.sidebar.header("Model Settings")
 model_source = st.sidebar.radio("모델 선택", ["기본 모델 (yolo11s.pt)", "사용자 학습 모델"])
 
-model_path = "models/best_refined.pt" # Default to refined model
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+model_path = os.path.join(BASE_DIR, "models", "best_refined.pt") # Default to refined model
 if model_source == "사용자 학습 모델":
     custom_model_path = st.sidebar.text_input("모델 경로 (.pt 파일)", "models/best_refined.pt")
     if os.path.exists(custom_model_path):
