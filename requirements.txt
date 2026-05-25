@@ -11,3 +11,4 @@ sahi
 grad-cam
 pytest
 pytest-cov
+-e .
