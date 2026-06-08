@@ -1,7 +1,7 @@
 # Caries Detection from Panoramic Radiographs
 (파노라마 방사선 사진을 이용한 치아 우식 탐지)
 
-[![Status](https://img.shields.io/badge/Status-v1.0_Release-4c1)](https://github.com/HyunchanAn/Caries_Detection_from_Panoramic)
+[![Status](https://img.shields.io/badge/Status-v1.1_Release-4c1)](https://github.com/HyunchanAn/Caries_Detection_from_Panoramic)
 [![Python](https://img.shields.io/badge/Python-3.12+-007ec6)](https://github.com/HyunchanAn/Caries_Detection_from_Panoramic)
 [![Backend](https://img.shields.io/badge/Backend-YOLOv11-d00)](https://github.com/HyunchanAn/Caries_Detection_from_Panoramic)
 [![UI](https://img.shields.io/badge/UI-Streamlit-f39c12)](https://github.com/HyunchanAn/Caries_Detection_from_Panoramic)
