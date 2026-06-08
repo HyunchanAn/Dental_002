@@ -14,7 +14,8 @@ def train_refined():
         name='dentex_yolov11s_refined_v3',
         patience=20, 
         save=True,
-        device=0    # Force GPU if available
+        device=0,    # Force GPU if available
+        fl_gamma=1.5 # Focal Loss (Issue #3)
     )
     
     print("Training complete.")

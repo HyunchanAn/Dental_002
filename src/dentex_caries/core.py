@@ -18,7 +18,7 @@ class CariesDetector:
         self.model = YOLO(model_path)
         self.class_names = {0: "Impacted", 1: "Caries", 2: "Periapical", 3: "Deep Caries"}
 
-    def predict(self, image, use_clahe=True, clahe_clip=2.0, use_sahi=False, slice_size=640, overlap_ratio=0.2):
+    def predict(self, image, use_clahe=True, clahe_clip=2.0, use_sahi=False, slice_size=640, overlap_ratio=0.2, conf=None):
         """
         이미지에 대해 탐지를 수행합니다.
         
@@ -26,16 +26,19 @@ class CariesDetector:
             image (np.ndarray): BGR 이미지 (OpenCV format)
             use_clahe (bool): CLAHE 전처리 적용 여부
             use_sahi (bool): SAHI 슬라이싱 추론 사용 여부
+            conf (float): Detection confidence threshold
         """
         processed_img = image.copy()
         if use_clahe:
             processed_img = apply_clahe(processed_img, clip_limit=clahe_clip)
 
+        current_conf = conf if conf is not None else self.conf
+
         if use_sahi:
             # SAHI Inference
             sahi_model = UltralyticsDetectionModel(
                 model_path=self.model_path,
-                confidence_threshold=self.conf,
+                confidence_threshold=current_conf,
                 device="cuda" if torch.cuda.is_available() else "cpu"
             )
             result = get_sliced_prediction(
@@ -59,7 +62,7 @@ class CariesDetector:
             return preds, processed_img
         else:
             # Normal Inference
-            results = self.model.predict(processed_img, conf=self.conf, verbose=False)
+            results = self.model.predict(processed_img, conf=current_conf, verbose=False)
             preds = []
             for box in results[0].boxes:
                 preds.append({

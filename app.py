@@ -5,6 +5,8 @@ import numpy as np
 import cv2
 import os
 import torch
+import gc
+from huggingface_hub import hf_hub_download
 from sahi.models.ultralytics import UltralyticsDetectionModel
 from sahi.predict import get_sliced_prediction
 from dentex_caries import CariesDetector, apply_clahe
@@ -51,6 +53,18 @@ line_width = st.sidebar.slider("Line Width (선 굵기)", 1, 5, 2)
 font_size = st.sidebar.slider("Font Size (글자 크기)", 5, 50, 15)
 
 @st.cache_resource
+def ensure_model_exists(local_path, hf_repo="HyunchanAn/Caries_Detection_from_Panoramic", hf_filename="best_refined.pt"):
+    if not os.path.exists(local_path):
+        try:
+            st.sidebar.info("Hugging Face에서 모델을 다운로드합니다...")
+            downloaded_path = hf_hub_download(repo_id=hf_repo, filename=hf_filename)
+            return downloaded_path
+        except Exception as e:
+            st.sidebar.warning(f"HF 다운로드 실패: {e}")
+            return local_path
+    return local_path
+
+@st.cache_resource
 def load_model(path):
     try:
         return YOLO(path)
@@ -58,7 +72,12 @@ def load_model(path):
         st.error(f"모델 로드 중 오류 발생: {e}")
         return None
 
-model = load_model(model_path)
+@st.cache_resource
+def get_detector(path):
+    return CariesDetector(model_path=path)
+
+resolved_model_path = ensure_model_exists(model_path)
+model = load_model(resolved_model_path)
 
 # Main Interface
 uploaded_file = st.file_uploader("파노라마 이미지 업로드", type=['jpg', 'jpeg', 'png'])
@@ -76,14 +95,22 @@ if uploaded_file is not None:
                 img_array = np.array(image)
                 img_bgr = cv2.cvtColor(img_array, cv2.COLOR_RGB2BGR)
                 
-                detector = CariesDetector(model_path=model_path, conf=conf_threshold)
+                # Image resizing for memory safety
+                max_dim = 1024
+                h, w = img_bgr.shape[:2]
+                if max(h, w) > max_dim:
+                    scale = max_dim / max(h, w)
+                    img_bgr = cv2.resize(img_bgr, (int(w * scale), int(h * scale)))
+                
+                detector = get_detector(resolved_model_path)
                 final_boxes, processed_img_bgr = detector.predict(
                     img_bgr, 
                     use_clahe=use_clahe, 
                     clahe_clip=clahe_clip,
                     use_sahi=use_sahi, 
                     slice_size=slice_size, 
-                    overlap_ratio=overlap_ratio
+                    overlap_ratio=overlap_ratio,
+                    conf=conf_threshold
                 )
                 processed_img_rgb = cv2.cvtColor(processed_img_bgr, cv2.COLOR_BGR2RGB)
 
@@ -164,6 +191,10 @@ if uploaded_file is not None:
                         st.info("💡 히트맵의 붉은 영역은 모델이 진단을 내릴 때 가장 중요하게 참고한 시각적 특징점들입니다.")
                     else:
                         st.warning("히트맵 생성에 실패했습니다.")
+                
+                # 가비지 컬렉션
+                del img_array, img_bgr, processed_img_bgr
+                gc.collect()
         else:
             st.error("모델이 로드되지 않았습니다.")
 
