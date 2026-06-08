@@ -18,14 +18,14 @@ RUN apt-get update && apt-get install -y \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# 5. Copy requirements and install
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
-# 6. Copy the project files
+# 5. Copy the project files
 COPY . .
 
+# 6. Install requirements
+RUN pip install --no-cache-dir -r requirements.txt
+
 # 7. Install the package in editable mode
+# Already handled by requirements.txt having `-e .`, but keep it just in case
 RUN pip install -e .
 
 # 8. Expose the port for Streamlit
