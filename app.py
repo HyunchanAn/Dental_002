@@ -53,7 +53,7 @@ line_width = st.sidebar.slider("Line Width (선 굵기)", 1, 5, 2)
 font_size = st.sidebar.slider("Font Size (글자 크기)", 5, 50, 15)
 
 @st.cache_resource
-def ensure_model_exists(local_path, hf_repo="HyunchanAn/Caries_Detection_from_Panoramic", hf_filename="best_refined.pt"):
+def ensure_model_exists(local_path, hf_repo="chemahc94/caries-detection-weights", hf_filename="best_refined.pt"):
     if not os.path.exists(local_path):
         try:
             st.sidebar.info("Hugging Face에서 모델을 다운로드합니다...")

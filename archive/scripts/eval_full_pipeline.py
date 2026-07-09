@@ -10,7 +10,7 @@ import sys
 
 # Add current dir to path
 sys.path.append(os.path.dirname(__file__))
-from preprocess import apply_clahe
+from dentex_caries.preprocess import apply_clahe
 
 def calculate_iou(box1, box2):
     x1 = max(box1[0], box2[0])

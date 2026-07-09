@@ -207,3 +207,11 @@
 - Streamlit Cloud OOM 방지를 위해 app.py 내 CariesDetector 인스턴스 캐싱(@st.cache_resource) 및 이미지 리사이징(max 1024px), 그리고 명시적 가비지 컬렉션 로직 추가.
 - 무거운 모델의 LFS 관리를 지양하고 Hugging Face를 통해 모델을 동적으로 다운로드하도록 app.py 로직 수정.
 - 클래스 불균형 대응 및 검증을 위해 src/analyze_metrics_per_class.py 생성 및 src/train_refined.py 내 Focal Loss (fl_gamma=1.5) 추가 적용하여 이슈 #1, #2, #3 해결.
+
+##### 2026-07-10 E2E Validation #####
+
+### E2E Validation 및 모델 평가 성공
+- Dental_000 통합 검증 계획에 따라 Dental_002의 E2E 파이프라인 검증을 실시함.
+- 핵심 모듈 `dentex_caries`에 대한 단위 테스트를 실시하여 성공적으로 패스함.
+- CLAHE 및 SAHI를 적용한 `eval_full_pipeline.py` 평가 스크립트를 구동하여 최종 성능 벤치마크를 기록함.
+- `reports_archive/` 폴더에 `260710_0845_Panorama_Caries_Detection_E2E_Validation_Report.md` 평가 보고서를 작성함.

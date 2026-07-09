@@ -106,5 +106,20 @@ pytest tests/ --cov=src/dentex_caries --cov-report=term
 2. **YOLOv11**: [Ultralytics](https://github.com/ultralytics/ultralytics)
 3. **Detection of Dental Anomalies in Digital Panoramic Images Using YOLO**: Uğur Şevik et al. (2025)
 
+## 모델 가중치 (Model Weights)
+학습된 모델 가중치는 Hugging Face Hub에서 자동으로 다운로드됩니다. 로컬에 `models/best_refined.pt`가 없는 경우 앱 구동 시 자동 Fallback이 작동합니다.
+- **HF Repository**: [`chemahc94/caries-detection-weights`](https://huggingface.co/chemahc94/caries-detection-weights)
+- **파일 목록**: `best.pt` (기본 모델), `best_refined.pt` (성능 고도화 모델)
+
+수동 다운로드가 필요한 경우:
+```python
+from huggingface_hub import hf_hub_download
+hf_hub_download(repo_id="chemahc94/caries-detection-weights", filename="best_refined.pt", local_dir="models")
+```
+
+## 학습 데이터셋 출처 (Dataset Sources)
+- **DENTEX Challenge 2023** (Primary): MICCAI 2023 Grand Challenge에서 제공된 치과 파노라마 방사선 사진 공개 데이터셋. 4가지 병소(Caries, Deep Caries, Periapical Lesion, Impacted) 어노테이션 포함. [https://dentex.grand-challenge.org/](https://dentex.grand-challenge.org/)
+- **Pediatric Dataset** (Supplementary): 소아 혼합치열기 환자의 파노라마 이미지를 추가 수집하여 다양한 연령대 커버리지를 확보함.
+
 ## 라이선스 (License)
 MIT License
