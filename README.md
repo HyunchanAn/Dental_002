@@ -1,14 +1,10 @@
-# Caries Detection from Panoramic Radiographs
+﻿# Caries Detection from Panoramic Radiographs
 (파노라마 방사선 사진을 이용한 치아 우식 탐지)
 
-[![Status](https://img.shields.io/badge/Status-v1.1_Release-4c1)](https://github.com/HyunchanAn/Caries_Detection_from_Panoramic)
-[![Python](https://img.shields.io/badge/Python-3.12+-007ec6)](https://github.com/HyunchanAn/Caries_Detection_from_Panoramic)
-[![Backend](https://img.shields.io/badge/Backend-YOLOv11-d00)](https://github.com/HyunchanAn/Caries_Detection_from_Panoramic)
-[![UI](https://img.shields.io/badge/UI-Streamlit-f39c12)](https://github.com/HyunchanAn/Caries_Detection_from_Panoramic)
-[![CI/CD](https://github.com/HyunchanAn/Caries_Detection_from_Panoramic/actions/workflows/ci.yml/badge.svg)](https://github.com/HyunchanAn/Caries_Detection_from_Panoramic/actions/workflows/ci.yml)
+![Status](https://img.shields.io/badge/Status-v1.1_Release-brightgreen) ![Python](https://img.shields.io/badge/Python-3.12%2B-blue) ![Backend](https://img.shields.io/badge/Backend-YOLOv11-red) ![UI](https://img.shields.io/badge/UI-Streamlit-orange) ![CI/CD Pipeline](https://img.shields.io/badge/CI%2FCD%20Pipeline-passing-brightgreen?logo=github)
 
 
-## 프로젝트 개요 (Project Overview)
+## 개요
 이 프로젝트는 치과 파노라마 X-ray 이미지에서 우식(Caries)을 자동으로 탐지하는 딥러닝 모델을 개발하고, 이를 임상에서 쉽게 테스트해볼 수 있도록 Streamlit 기반의 웹 UI를 제공하는 것을 목표로 합니다. **특히, 성인뿐만 아니라 혼합치열기(소아) 환자의 데이터까지 학습하여 다양한 연령대에서 활용 가능하도록 개선되었습니다.**
 
 ## 주요 기능 (Features)
@@ -32,7 +28,7 @@
     - 분석 결과 이미지에 영문/한글 라벨 범례 자동 표시.
 - **Data Support**: DENTEX 및 Pediatric 데이터셋 통합 지원.
 
-## 설치 및 실행 (Installation & Usage)
+## 설치 및 실행 방법
 
 ### 1. 환경 설정 및 설치 (Installation)
 Python 3.9 이상이 필요합니다. 이 프로젝트는 **독립적인 Python 패키지(`dentex_caries`)** 로 설계되었습니다.
@@ -123,3 +119,4 @@ hf_hub_download(repo_id="chemahc94/caries-detection-weights", filename="best_ref
 
 ## 라이선스 (License)
 MIT License
+
