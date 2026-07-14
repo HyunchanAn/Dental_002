@@ -1,3 +1,4 @@
+![Hugging Face](https://img.shields.io/badge/Models-HuggingFace-yellow?logo=huggingface)
 ﻿# Caries Detection from Panoramic Radiographs
 (파노라마 방사선 사진을 이용한 치아 우식 탐지)
 
@@ -27,6 +28,14 @@
     - 웹 브라우저를 통해 손쉽게 이미지를 업로드하고 분석 결과 확인.
     - 분석 결과 이미지에 영문/한글 라벨 범례 자동 표시.
 - **Data Support**: DENTEX 및 Pediatric 데이터셋 통합 지원.
+
+
+## 📦 Model Weights (Hugging Face)
+이 모듈의 학습된 가중치 모델은 Hugging Face 저장소에 연동되어 있습니다. 
+아래 링크에서 다운로드할 수 있습니다:
+- [Hugging Face Repository (chemahc94/Dental-AI-Models)](https://huggingface.co/chemahc94/Dental-AI-Models/tree/main/Dental_002)
+
+다운로드한 가중치 파일은 이 레포지토리의 해당 모델 폴더에 배치하여 사용하세요.
 
 ## 설치 및 실행 방법
 
