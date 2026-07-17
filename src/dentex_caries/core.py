@@ -52,12 +52,15 @@ class CariesDetector:
             # Convert SAHI results to a format compatible with our visualization
             preds = []
             for obj in result.object_prediction_list:
+                name = self.class_names.get(obj.category.id, "Unknown")
+                if name == "Periapical":
+                    continue
                 bbox = obj.bbox.to_xyxy()
                 preds.append({
                     "box": bbox,
                     "cls": obj.category.id,
                     "conf": obj.score.value,
-                    "name": self.class_names.get(obj.category.id, "Unknown")
+                    "name": name
                 })
             return preds, processed_img
         else:
@@ -65,11 +68,15 @@ class CariesDetector:
             results = self.model.predict(processed_img, conf=current_conf, verbose=False)
             preds = []
             for box in results[0].boxes:
+                cls_id = int(box.cls[0])
+                name = self.class_names.get(cls_id, "Unknown")
+                if name == "Periapical":
+                    continue
                 preds.append({
                     "box": box.xyxy[0].tolist(),
-                    "cls": int(box.cls[0]),
+                    "cls": cls_id,
                     "conf": float(box.conf[0]),
-                    "name": self.class_names.get(int(box.cls[0]), "Unknown")
+                    "name": name
                 })
             return preds, processed_img
 

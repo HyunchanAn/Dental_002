@@ -1,9 +1,15 @@
-![Status](https://img.shields.io/badge/Status-v1.0%20Release-brightgreen) ![Python](https://img.shields.io/badge/Python-3.12%2B-blue) ![Backend](https://img.shields.io/badge/Backend-YOLOv8-red) ![UI](https://img.shields.io/badge/UI-Streamlit-orange) ![CI/CD Pipeline](https://img.shields.io/badge/CI%2FCD%20Pipeline-passing-brightgreen?logo=github)
-﻿# Caries Detection from Panoramic Radiographs
-(파노라마 방사선 사진을 이용한 치아 우식 탐지)
+# Dental_002 (Caries & Impacted Detection)
 
-![Status](https://img.shields.io/badge/Status-v1.1_Release-brightgreen) ![Python](https://img.shields.io/badge/Python-3.12%2B-blue) ![Backend](https://img.shields.io/badge/Backend-YOLOv11-red) ![UI](https://img.shields.io/badge/UI-Streamlit-orange) ![CI/CD Pipeline](https://img.shields.io/badge/CI%2FCD%20Pipeline-passing-brightgreen?logo=github)
+![Status](https://img.shields.io/badge/Status-v1.0%20Release-brightgreen "Status") ![Python](https://img.shields.io/badge/Python-3.12%2B-blue "Python") ![Backend](https://img.shields.io/badge/Backend-YOLOv8-red "Backend") ![UI](https://img.shields.io/badge/UI-Streamlit-orange "UI") ![CI/CD Pipeline](https://img.shields.io/badge/CI%2FCD%20Pipeline-passing-brightgreen?logo=github "CI/CD Pipeline")
 
+파노라마 X-ray에서 **치아 자체에 발생하는 병소(충치, 매복치 등)**를 전담하여 검출하는 YOLOv8 기반 모듈입니다.
+
+> [!IMPORTANT]
+> **아키텍처 역할 분리 (002 vs 012)**: 002 모듈은 오직 "치아 영역"의 병소(우식 등)에만 집중합니다. 치근단(Periapical) 병소의 경우 치조골 내부의 영역이므로 도메인 중복을 피하기 위해 **012 모듈**로 이관되었으며, 002 파이프라인에서는 `Periapical` 검출 결과를 의도적으로 필터링하여 무시합니다.
+
+## 💻 Hardware & Infrastructure
+- **Development / Inference Env**: Intel Core i5-14450HX, NVIDIA RTX 4060 Laptop (8GB VRAM), 16GB RAM
+- **Training Env (Main Workstation)**: AMD Ryzen 9 9900X, NVIDIA RTX 5080 (16GB VRAM), 64GB RAM
 
 ## 개요
 > **[학습 환경 사양]** 실질적 모델 학습은 **RTX 5080 + 라이젠9-6 9900x** 환경에서 진행되었습니다.
