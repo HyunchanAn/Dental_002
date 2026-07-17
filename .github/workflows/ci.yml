@@ -12,8 +12,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Check out repository
+    - name: Checkout code
       uses: actions/checkout@v4
+
+    - name: Checkout Central Tests
+      uses: actions/checkout@v4
+      with:
+        repository: HyunchanAn/Dental_000
+        path: Dental_000
 
     - name: Set up Python 3.11
       uses: actions/setup-python@v5
@@ -34,7 +40,7 @@ jobs:
 
     - name: Run pytest
       run: |
-        pytest tests/ --cov=src/dentex_caries --cov-report=term
+        PYTHONPATH=${{ github.workspace }} pytest Dental_000/tests_002 --cov=src/dentex_caries --cov-report=term
 
   docker-build:
     name: Verify Docker Build
