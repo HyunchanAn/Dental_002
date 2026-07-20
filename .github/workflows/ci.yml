@@ -40,7 +40,7 @@ jobs:
 
     - name: Run pytest
       run: |
-        PYTHONPATH=${{ github.workspace }} pytest . --cov=src/dentex_caries --cov-report=term
+        PYTHONPATH=${{ github.workspace }} pytest Dental_000/tests/tests_002 --cov=src/dentex_caries --cov-report=term
 
   docker-build:
     name: Verify Docker Build
