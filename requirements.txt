@@ -12,3 +12,4 @@ grad-cam
 pytest
 pytest-cov
 -e .
+git+https://github.com/HyunchanAn/Dental_Core.git@master
