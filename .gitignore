@@ -50,3 +50,5 @@ sahi_results/
 temp_xai.png
 test_images/
 test_results/
+*.pth
+*.onnx
