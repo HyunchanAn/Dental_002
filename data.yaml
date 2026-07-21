@@ -1,5 +1,5 @@
 # Train/Val data paths
-path: C:/Users/chema/Github/Caries_Detection_from_Panoramic/data/processed
+path: D:/Github/Dental_002/data/refined
 train: train/images
 val: val/images
 test:  # optional
