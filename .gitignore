@@ -1,6 +1,7 @@
 # Python
 __pycache__/
 *.py[cod]
+*.pyc
 *$py.class
 *.so
 .Python
@@ -20,6 +21,11 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+
+# Coverage / Logs / Archive
+.coverage
+logs/
+archive/
 
 # Virtual Environment
 venv/

@@ -15,6 +15,8 @@ class CariesDetector:
     def __init__(self, model_path="models/best_refined.pt", conf=0.25):
         self.model_path = model_path
         self.conf = conf
+        self.device = 0 if torch.cuda.is_available() else "cpu"
+        self.sahi_device = "cuda" if torch.cuda.is_available() else "cpu"
         self.model = YOLO(model_path)
         self.class_names = {0: "Impacted", 1: "Caries", 2: "Periapical", 3: "Deep Caries"}
 
@@ -39,7 +41,7 @@ class CariesDetector:
             sahi_model = UltralyticsDetectionModel(
                 model_path=self.model_path,
                 confidence_threshold=current_conf,
-                device="cuda" if torch.cuda.is_available() else "cpu"
+                device=self.sahi_device
             )
             result = get_sliced_prediction(
                 processed_img,
@@ -65,7 +67,7 @@ class CariesDetector:
             return preds, processed_img
         else:
             # Normal Inference
-            results = self.model.predict(processed_img, conf=current_conf, verbose=False)
+            results = self.model.predict(processed_img, conf=current_conf, device=self.device, verbose=False)
             preds = []
             for box in results[0].boxes:
                 cls_id = int(box.cls[0])

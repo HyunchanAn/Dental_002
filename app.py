@@ -16,7 +16,7 @@ st.set_page_config(page_title="Caries Detection AI", layout="wide")
 
 st.title("🦷 Panoramic Caries Detection (우식 탐지)")
 st.markdown("""
-이 어플리케이션은 **YOLOv11** 모델을 사용하여 파노라마 X-ray 이미지에서 치아 우식(Caries)을 탐지합니다.
+이 어플리케이션은 `YOLOv11` 모델을 사용하여 파노라마 X-ray 이미지에서 치아 우식(Caries)을 탐지합니다.
 """)
 
 # Sidebar for Model Selection
