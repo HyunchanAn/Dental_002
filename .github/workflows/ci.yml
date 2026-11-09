@@ -12,4 +12,4 @@ jobs:
     with:
       python_version: "3.11"
       install_opencv: true
-      test_command: "PYTHONPATH=${{ github.workspace }} pytest Dental_000/tests/tests_002 --cov=src/dentex_caries --cov-report=term"
+      test_command: "PYTHONPATH=${{ github.workspace }}:${{ github.workspace }}/src pytest tests Dental_000/tests/tests_002 --cov=src/dentex_caries --cov-report=term"
