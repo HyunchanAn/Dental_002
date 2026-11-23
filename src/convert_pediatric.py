@@ -3,8 +3,8 @@ import json
 import shutil
 from pathlib import Path
 
-# 경로 설정
-BASE_DIR = Path(r"c:\Users\chema\Github\Caries_Detection_from_Panoramic")
+# Base repository directory resolved dynamically
+BASE_DIR = Path(__file__).resolve().parents[1]
 RAW_DATA_DIR = BASE_DIR / "data/Dental_dataset/Pediatric dental disease detection dataset/Train"
 OUTPUT_DIR = BASE_DIR / "data/processed/train"  # 기존 학습 데이터 위치에 병합
 

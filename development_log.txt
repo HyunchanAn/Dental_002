@@ -231,3 +231,9 @@
 
 2026-10-25
 - 전 시리즈 개발일지(`development_log.txt`) 단일 표준 양식 통일 완료.
+
+2026-11-23
+- 이슈 #9 해결 (`[P1] 008 치아 위치 기반 충치·병변 탐지 연동 및 HiTL 적용`):
+  - `src/dentex_caries/fdi_hitl_bridge.py` 신설: `Dental_008` 치아 폴리곤 내부 포함 검사, 병변 면적 대비 교집합 비율(`IoA`), 치관 영역 가중치를 결합한 `map_caries_to_008_teeth` 매퍼 구현 및 임상 교정(`clinician_corrected`) 보존 병합 적용.
+  - `Dental_015` Golden HiTL JSON(`dental_core.panorama_hitl.v1`)에서 교정된 우식 박스를 전장(`full`) 및 치아 패치(`tooth_patch`) YOLO 학습 포맷으로 내보내는 `export_hitl_caries_to_yolo` 구현.
+  - 단위 테스트 `tests/test_fdi_hitl_bridge.py` 추가 및 전체 테스트 통과 확인.

@@ -123,7 +123,9 @@ if uploaded_file is not None:
 
                 import glob
                 try:
-                    font_paths = ["C:/Windows/Fonts/malgun.ttf", "/usr/share/fonts/truetype/nanum/NanumGothic.ttf", "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"]
+                    windir = os.environ.get("WINDIR", "")
+                    win_font = os.path.join(windir, "Fonts", "malgun.ttf") if windir else ""
+                    font_paths = [p for p in [win_font, "/usr/share/fonts/truetype/nanum/NanumGothic.ttf", "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"] if p]
                     font_path = next((p for p in font_paths if os.path.exists(p)), None)
                     if not font_path:
                         for p in ["/usr/share/fonts/**/*.ttf", "/usr/share/fonts/**/*.otf"]:

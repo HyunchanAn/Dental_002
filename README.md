@@ -1,4 +1,4 @@
-![Status](https://img.shields.io/badge/Status-v1.0%20Release-brightgreen "Status") ![Python](https://img.shields.io/badge/Python-3.12%2B-blue "Python") ![Backend](https://img.shields.io/badge/Backend-YOLOv8%20%2F%20YOLOv11-red "Backend") ![UI](https://img.shields.io/badge/UI-Streamlit-orange "UI") ![License](https://img.shields.io/badge/License-MIT-green "License") ![CI/CD Pipeline](https://img.shields.io/badge/CI%2FCD%20Pipeline-passing-brightgreen?logo=github "CI/CD Pipeline")
+![Status](https://img.shields.io/badge/Status-v1.1%20Release-brightgreen "Status") ![Python](https://img.shields.io/badge/Python-3.12%2B-blue "Python") ![Backend](https://img.shields.io/badge/Backend-YOLOv8%20%2F%20YOLOv11-red "Backend") ![UI](https://img.shields.io/badge/UI-Streamlit-orange "UI") ![License](https://img.shields.io/badge/License-MIT-green "License") ![CI/CD Pipeline](https://img.shields.io/badge/CI%2FCD%20Pipeline-passing-brightgreen?logo=github "CI/CD Pipeline")
 
 # Dental_002: Caries & Impacted Tooth Detection (파노라마 치아 우식증 및 매복치 탐지)
 
@@ -30,6 +30,9 @@
   - `Periapical Lesion` (치근단 병소 — 단독 실행 시 지원, 통합 파이프라인에서는 `Dental_012`가 전담)
   - `Impacted` (매복치 — 단독 실행 시 지원, 통합 파이프라인에서는 `Dental_009` 기하 분석과 연계)
 - [기술 스택]: YOLOv8 / YOLOv11 (Ultralytics), PyTorch, ONNX Runtime, OpenCV, Pillow, Streamlit
+- [Dental_008 FDI 치아 매핑 및 HiTL 재학습 연동 (`src/dentex_caries/fdi_hitl_bridge.py`)]:
+  - `map_caries_to_008_teeth`: `Dental_008` 치아 폴리곤(`pointPolygonTest`), 병변 면적 교집합 비율(`IoA`), 치관 영역 가중치를 결합하여 우식 병소를 정확한 FDI 치아 번호에 매핑하고 `PanoramaHiTLDocument`에 기록합니다.
+  - `export_hitl_caries_to_yolo`: `Dental_015`에서 교정·저장된 Golden HiTL JSON(`dental_core.panorama_hitl.v1`)을 전장 파노라마(`mode='full'`) 또는 치아 패치(`mode='tooth_patch'`) YOLO 학습 라벨로 변환합니다.
 
 ### 2. 모델 가중치 (Model Weights on Hugging Face)
 학습된 가중치는 Hugging Face Hub에 연동되어 있으며, 로컬에 `models/best_refined.pt`가 없는 경우 구동 시 자동 Fallback 다운로드가 작동합니다:
