@@ -1,4 +1,4 @@
-![Status](https://img.shields.io/badge/Status-v1.1%20Release-brightgreen "Status") ![Python](https://img.shields.io/badge/Python-3.12%2B-blue "Python") ![Backend](https://img.shields.io/badge/Backend-YOLOv8%20%2F%20YOLOv11-red "Backend") ![UI](https://img.shields.io/badge/UI-Streamlit-orange "UI") ![License](https://img.shields.io/badge/License-MIT-green "License") ![CI/CD Pipeline](https://img.shields.io/badge/CI%2FCD%20Pipeline-passing-brightgreen?logo=github "CI/CD Pipeline")
+﻿![Status](https://img.shields.io/badge/Status-v1.1%20Release-brightgreen "Status") ![Python](https://img.shields.io/badge/Python-3.10%2B-blue "Python") ![Backend](https://img.shields.io/badge/Backend-YOLOv8%20%2F%20YOLOv11-red "Backend") ![UI](https://img.shields.io/badge/UI-Streamlit-orange "UI") ![License](https://img.shields.io/badge/License-MIT-green "License") ![CI/CD Pipeline](https://img.shields.io/badge/CI%2FCD%20Pipeline-passing-brightgreen?logo=github "CI/CD Pipeline")
 
 # Dental_002: Caries & Impacted Tooth Detection (파노라마 치아 우식증 및 매복치 탐지)
 
